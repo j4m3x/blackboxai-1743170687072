@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>f1prep.com - Practice Your F1 Visa Interview</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            animation: modalFadeIn 0.3s forwards;
+        }
+        .modal-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 1s ease-out;
+        }
+        .animate-fadeInRight {
+            animation: fadeInRight 1s ease-out;
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .category-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="flex items-center">
+                            <i class="fas fa-passport text-blue-600 text-2xl mr-2"></i>
+                            <span class="font-bold text-xl text-gray-800">f1prep.com</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="about.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        About Us
+                    </a>
+                    <a href="https://www.buymeacoffee.com" target="_blank" class="px-4 py-2 rounded-md text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 transition-colors duration-200">
+                        <i class="fas fa-coffee mr-2"></i>Buy me a coffee
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient pt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fadeInUp">
+                    <h1 class="text-4xl sm:text-5xl font-bold mb-6">
+                        Master Your F1 Visa Interview with
+                        <span class="gradient-text">Confidence</span>
+                    </h1>
+                    <p class="text-gray-600 text-lg mb-8">
+                        Practice with real visa interview questions, get instant feedback, and improve your interview skills. Start your journey to study in the USA today.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button id="startPractice" class="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-play mr-2"></i>
+                            Start Practice
+                        </button>
+                        <button id="browseQuestions" class="px-8 py-4 bg-white text-blue-600 rounded-lg hover:bg-gray-50 transition-all duration-200 transform hover:scale-105 flex items-center justify-center border border-blue-600">
+                            <i class="fas fa-list-ul mr-2"></i>
+                            Browse Questions
+                        </button>
+                    </div>
+                </div>
+                <div class="hidden lg:block animate-fadeInRight">
+                    <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                         alt="Student practicing interview" 
+                         class="rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-3xl font-bold mb-4">Why Choose f1prep.com?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our platform provides everything you need to ace your F1 visa interview.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature Cards -->
+                <div class="feature-card bg-gray-50 rounded-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-comments text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Real Questions</h3>
+                    <p class="text-gray-600">
+                        Practice with actual F1 visa interview questions used by visa officers.
+                    </p>
+                </div>
+
+                <div class="feature-card bg-gray-50 rounded-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-microphone-alt text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Voice Practice</h3>
+                    <p class="text-gray-600">
+                        Record your answers and get instant feedback on your responses.
+                    </p>
+                </div>
+
+                <div class="feature-card bg-gray-50 rounded-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Track Progress</h3>
+                    <p class="text-gray-600">
+                        Monitor your improvement and identify areas that need more practice.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-3xl font-bold mb-4">Question Categories</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    We cover all important aspects of the F1 visa interview.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Category Cards -->
+                <div class="category-card bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-graduation-cap text-blue-600 text-xl mr-3"></i>
+                        <h3 class="text-lg font-semibold">Academic Background</h3>
+                    </div>
+                    <p class="text-gray-600">Questions about your educational history and achievements.</p>
+                </div>
+
+                <div class="category-card bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-university text-blue-600 text-xl mr-3"></i>
+                        <h3 class="text-lg font-semibold">Program Choice</h3>
+                    </div>
+                    <p class="text-gray-600">Questions about your chosen university and course.</p>
+                </div>
+
+                <div class="category-card bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-wallet text-blue-600 text-xl mr-3"></i>
+                        <h3 class="text-lg font-semibold">Financial Planning</h3>
+                    </div>
+                    <p class="text-gray-600">Questions about funding your education and living expenses.</p>
+                </div>
+
+                <div class="category-card bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-road text-blue-600 text-xl mr-3"></i>
+                        <h3 class="text-lg font-semibold">Future Plans</h3>
+                    </div>
+                    <p class="text-gray-600">Questions about your career goals and post-graduation plans.</p>
+                </div>
+
+                <div class="category-card bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-globe text-blue-600 text-xl mr-3"></i>
+                        <h3 class="text-lg font-semibold">Personal Preparation</h3>
+                    </div>
+                    <p class="text-gray-600">Questions about adapting to life in the United States.</p>
+                </div>
+
+                <div class="category-card bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-plus-circle text-blue-600 text-xl mr-3"></i>
+                        <h3 class="text-lg font-semibold">Custom Questions</h3>
+                    </div>
+                    <p class="text-gray-600">Add your own questions for practice.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Practice Modal -->
+    <div id="practiceModal" class="modal">
+        <div class="modal-content bg-white w-full max-w-4xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-900">Choose Your Practice Mode</h3>
+                    <button class="modal-close text-gray-400 hover:text-gray-500 transition-colors duration-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Random Questions Card -->
+                    <a href="interview.html" class="group relative bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-8 text-white transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                        <div class="absolute top-0 right-0 mt-4 mr-4 bg-white/20 rounded-full p-2">
+                            <i class="fas fa-random text-xl"></i>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="h-12 w-12 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
+                                <i class="fas fa-dice text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold">Random Questions</h4>
+                            <p class="text-white/80">
+                                Jump right into practice with randomly selected questions from all categories.
+                            </p>
+                            <div class="flex items-center mt-4 text-white/80 group-hover:text-white">
+                                <span>Start Practice</span>
+                                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 right-0 opacity-10 text-6xl mr-4 mb-4">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                    </a>
+
+                    <!-- Select Categories Card -->
+                    <a href="categories.html" class="group relative bg-white border-2 border-blue-500 rounded-2xl p-8 transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                        <div class="absolute top-0 right-0 mt-4 mr-4 bg-blue-100 rounded-full p-2">
+                            <i class="fas fa-list-ul text-xl text-blue-500"></i>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="h-12 w-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4">
+                                <i class="fas fa-th-list text-2xl text-blue-500"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold text-gray-900">Select Categories</h4>
+                            <p class="text-gray-600">
+                                Choose specific categories to focus your practice on particular topics.
+                            </p>
+                            <div class="flex items-center mt-4 text-blue-500">
+                                <span>Browse Categories</span>
+                                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 right-0 opacity-10 text-6xl mr-4 mb-4 text-blue-500">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                    </a>
+
+                    <!-- Quick Stats -->
+                    <div class="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                        <div class="bg-gray-50 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600">150+</div>
+                            <div class="text-sm text-gray-600">Practice Questions</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600">5</div>
+                            <div class="text-sm text-gray-600">Categories</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600">Real-time</div>
+                            <div class="text-sm text-gray-600">Feedback</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600">Voice</div>
+                            <div class="text-sm text-gray-600">Recording</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-base text-gray-400">
+                    © 2023 f1prep.com. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const practiceModal = document.getElementById('practiceModal');
+            const startPracticeBtn = document.getElementById('startPractice');
+            const modalCloseButtons = document.querySelectorAll('.modal-close');
+
+            // Modal functionality
+            function openModal(modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal(modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            startPracticeBtn.addEventListener('click', () => openModal(practiceModal));
+
+            modalCloseButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    closeModal(practiceModal);
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    closeModal(e.target);
+                }
+            });
+
+            // Intersection Observer for animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fadeInUp');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.feature-card, .category-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
