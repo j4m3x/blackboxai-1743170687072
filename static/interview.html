@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Interview - F1 Interview Prep</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .recording-dot {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .feedback-item {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex items-center">
+                            <i class="fas fa-passport text-blue-600 text-2xl mr-2"></i>
+                            <span class="font-bold text-xl text-gray-800">F1 Interview Prep</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="endSession" class="text-red-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        <i class="fas fa-times-circle mr-1"></i> End Session
+                    </button>
+                    <a href="https://www.buymeacoffee.com" target="_blank" class="px-4 py-2 rounded-md text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 transition-colors duration-200">
+                        <i class="fas fa-coffee mr-2"></i>Buy me a coffee
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto">
+            <!-- Progress Steps -->
+            <div class="mb-8">
+                <div class="flex items-center justify-center">
+                    <div class="flex items-center text-green-600">
+                        <div class="rounded-full h-8 w-8 flex items-center justify-center bg-green-600 text-white">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="ml-2 font-medium">Categories</div>
+                    </div>
+                    <div class="h-1 w-16 bg-blue-600 mx-4"></div>
+                    <div class="flex items-center text-blue-600">
+                        <div class="rounded-full h-8 w-8 flex items-center justify-center bg-blue-600 text-white">2</div>
+                        <div class="ml-2 font-medium">Practice</div>
+                    </div>
+                    <div class="h-1 w-16 bg-gray-200 mx-4"></div>
+                    <div class="flex items-center text-gray-400">
+                        <div class="rounded-full h-8 w-8 flex items-center justify-center bg-gray-200">3</div>
+                        <div class="ml-2 font-medium">Feedback</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Video Feed and Controls -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Video Container -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-900">
+                            <video id="videoPreview" class="w-full h-full object-cover" autoplay muted></video>
+                        </div>
+                        
+                        <!-- Recording Controls -->
+                        <div class="p-4 border-t border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span id="recordingStatus" class="hidden items-center">
+                                        <span class="recording-dot h-3 w-3 bg-red-500 rounded-full mr-2"></span>
+                                        Recording
+                                    </span>
+                                    <span id="timer" class="text-gray-600 ml-4">00:00</span>
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button id="startRecording" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200">
+                                        <i class="fas fa-microphone mr-2"></i> Start Recording
+                                    </button>
+                                    <button id="stopRecording" class="hidden px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-200">
+                                        <i class="fas fa-stop mr-2"></i> Stop
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Question -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-semibold text-gray-900">Current Question</h2>
+                            <span id="categoryBadge" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"></span>
+                        </div>
+                        <div id="currentQuestion" class="text-lg text-gray-700 mb-4">
+                            Loading question...
+                        </div>
+                        <div class="flex space-x-4">
+                            <button id="repeatQuestion" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200">
+                                <i class="fas fa-volume-up mr-2"></i> Repeat Question
+                            </button>
+                            <button id="nextQuestion" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors duration-200">
+                                <i class="fas fa-forward mr-2"></i> Next Question
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Real-time Feedback -->
+                <div class="space-y-6">
+                    <!-- Feedback Panel -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Real-time Feedback</h2>
+                        
+                        <!-- Clarity -->
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-sm font-medium text-gray-700">Clarity</h3>
+                                <span id="clarityScore" class="text-sm font-semibold text-green-600">0%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-2">
+                                <div id="clarityBar" class="progress-bar bg-green-600 rounded-full h-2" style="width: 0%"></div>
+                            </div>
+                            <ul id="clarityFeedback" class="mt-2 text-sm text-gray-600">
+                            </ul>
+                        </div>
+
+                        <!-- Confidence -->
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-sm font-medium text-gray-700">Confidence</h3>
+                                <span id="confidenceScore" class="text-sm font-semibold text-blue-600">0%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-2">
+                                <div id="confidenceBar" class="progress-bar bg-blue-600 rounded-full h-2" style="width: 0%"></div>
+                            </div>
+                            <ul id="confidenceFeedback" class="mt-2 text-sm text-gray-600">
+                            </ul>
+                        </div>
+
+                        <!-- Content -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-sm font-medium text-gray-700">Content</h3>
+                                <span id="contentScore" class="text-sm font-semibold text-purple-600">0%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-2">
+                                <div id="contentBar" class="progress-bar bg-purple-600 rounded-full h-2" style="width: 0%"></div>
+                            </div>
+                            <ul id="contentFeedback" class="mt-2 text-sm text-gray-600">
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Session History -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Session History</h2>
+                        <div id="sessionHistory" class="space-y-4">
+                            <!-- History items will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-sm text-gray-400">
+                    © 2023 F1 Interview Prep. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize variables
+            let mediaRecorder;
+            let recordedChunks = [];
+            let startTime;
+            let timerInterval;
+            let currentQuestionText = '';
+            let currentCategory = '';
+            
+            // Get DOM elements
+            const videoPreview = document.getElementById('videoPreview');
+            const startButton = document.getElementById('startRecording');
+            const stopButton = document.getElementById('stopRecording');
+            const recordingStatus = document.getElementById('recordingStatus');
+            const timer = document.getElementById('timer');
+            const questionDisplay = document.getElementById('currentQuestion');
+            const categoryBadge = document.getElementById('categoryBadge');
+            const nextQuestion = document.getElementById('nextQuestion');
+            const repeatQuestion = document.getElementById('repeatQuestion');
+            const endSession = document.getElementById('endSession');
+            const sessionHistory = document.getElementById('sessionHistory');
+
+            // Feedback elements
+            const clarityScore = document.getElementById('clarityScore');
+            const clarityBar = document.getElementById('clarityBar');
+            const clarityFeedback = document.getElementById('clarityFeedback');
+            const confidenceScore = document.getElementById('confidenceScore');
+            const confidenceBar = document.getElementById('confidenceBar');
+            const confidenceFeedback = document.getElementById('confidenceFeedback');
+            const contentScore = document.getElementById('contentScore');
+            const contentBar = document.getElementById('contentBar');
+            const contentFeedback = document.getElementById('contentFeedback');
+
+            // Initialize video stream
+            async function initializeMedia() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                    videoPreview.srcObject = stream;
+                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            recordedChunks.push(event.data);
+                        }
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                        const url = URL.createObjectURL(blob);
+                        saveRecording(url);
+                        recordedChunks = [];
+                        simulateFeedback();
+                    };
+
+                } catch (err) {
+                    console.error('Error accessing media devices:', err);
+                    alert('Unable to access camera or microphone. Please ensure you have granted the necessary permissions.');
+                }
+            }
+
+            // Timer functions
+            function updateTimer() {
+                const now = Date.now();
+                const diff = now - startTime;
+                const seconds = Math.floor(diff / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const displaySeconds = (seconds % 60).toString().padStart(2, '0');
+                const displayMinutes = minutes.toString().padStart(2, '0');
+                timer.textContent = `${displayMinutes}:${displaySeconds}`;
+            }
+
+            // Function to speak the question
+            function speakQuestion(question) {
+                const utterance = new SpeechSynthesisUtterance(question);
+                utterance.rate = 0.9; // Slightly slower for clarity
+                utterance.pitch = 1;
+                speechSynthesis.speak(utterance);
+            }
+
+            // Fetch and speak next question
+            async function fetchNextQuestion() {
+                try {
+                    const response = await fetch('/api/random-question');
+                    const data = await response.json();
+                    if (data.success) {
+                        currentQuestionText = data.question;
+                        currentCategory = data.category;
+                        questionDisplay.textContent = currentQuestionText;
+                        categoryBadge.textContent = currentCategory;
+                        speakQuestion(currentQuestionText);
+                    }
+                } catch (error) {
+                    console.error('Error fetching question:', error);
+                    questionDisplay.textContent = 'Error loading question. Please try again.';
+                }
+            }
+
+            // Simulate feedback
+            function simulateFeedback() {
+                // Reset feedback
+                updateFeedback('clarity', 0, '');
+                updateFeedback('confidence', 0, '');
+                updateFeedback('content', 0, '');
+
+                // Simulate analysis delay
+                setTimeout(() => {
+                    updateFeedback('clarity', 85, 'Clear pronunciation and good pace');
+                    
+                    setTimeout(() => {
+                        updateFeedback('confidence', 90, 'Strong, confident delivery');
+                        
+                        setTimeout(() => {
+                            updateFeedback('content', 95, 'Well-structured and relevant response');
+                        }, 500);
+                    }, 500);
+                }, 500);
+            }
+
+            // Update feedback display
+            function updateFeedback(type, score, feedback) {
+                const scoreElement = document.getElementById(`${type}Score`);
+                const barElement = document.getElementById(`${type}Bar`);
+                const feedbackList = document.getElementById(`${type}Feedback`);
+
+                scoreElement.textContent = `${score}%`;
+                barElement.style.width = `${score}%`;
+
+                feedbackList.innerHTML = '';
+                const li = document.createElement('li');
+                li.className = 'flex items-start feedback-item';
+                li.innerHTML = `
+                    <i class="fas fa-info-circle text-${type === 'clarity' ? 'green' : type === 'confidence' ? 'blue' : 'purple'}-500 mt-1 mr-2"></i>
+                    ${feedback}
+                `;
+                feedbackList.appendChild(li);
+            }
+
+            // Save recording and update history
+            function saveRecording(url) {
+                const timestamp = new Date().toLocaleTimeString();
+                const historyItem = document.createElement('div');
+                historyItem.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg';
+                historyItem.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-video text-gray-500 mr-3"></i>
+                        <div>
+                            <div class="text-sm font-medium text-gray-900">Recording ${sessionHistory.children.length + 1}</div>
+                            <div class="text-xs text-gray-500">${timestamp}</div>
+                        </div>
+                    </div>
+                    <a href="${url}" download="interview-recording-${Date.now()}.webm" 
+                       class="text-blue-600 hover:text-blue-700">
+                        <i class="fas fa-download"></i>
+                    </a>
+                `;
+                sessionHistory.prepend(historyItem);
+            }
+
+            // Event Listeners
+            startButton.addEventListener('click', () => {
+                mediaRecorder.start();
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 1000);
+                startButton.classList.add('hidden');
+                stopButton.classList.remove('hidden');
+                recordingStatus.classList.remove('hidden');
+                recordingStatus.classList.add('flex');
+            });
+
+            stopButton.addEventListener('click', () => {
+                mediaRecorder.stop();
+                clearInterval(timerInterval);
+                startButton.classList.remove('hidden');
+                stopButton.classList.add('hidden');
+                recordingStatus.classList.add('hidden');
+                recordingStatus.classList.remove('flex');
+            });
+
+            repeatQuestion.addEventListener('click', () => {
+                if (currentQuestionText) {
+                    speakQuestion(currentQuestionText);
+                }
+            });
+
+            nextQuestion.addEventListener('click', fetchNextQuestion);
+
+            endSession.addEventListener('click', () => {
+                if (confirm('Are you sure you want to end this session? All unsaved recordings will be lost.')) {
+                    window.location.href = 'index.html';
+                }
+            });
+
+            // Initialize
+            initializeMedia();
+            fetchNextQuestion();
+        });
+    </script>
+</body>
+</html>
