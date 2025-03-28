@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit SOP - F1 Visa Interview Practice</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .file-drop-zone {
+            border: 2px dashed #cbd5e0;
+            transition: all 0.3s ease;
+        }
+        .file-drop-zone.drag-over {
+            border-color: #4299e1;
+            background-color: #ebf8ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex items-center">
+                            <i class="fas fa-passport text-blue-600 text-2xl mr-2"></i>
+                            <span class="font-bold text-xl text-gray-800">F1 Interview Prep</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="coming-soon-tooltip">
+                        <button disabled class="text-gray-400 px-3 py-2 rounded-md text-sm font-medium cursor-not-allowed">Login</button>
+                    </span>
+                    <a href="https://www.buymeacoffee.com" target="_blank" class="ml-4 px-4 py-2 rounded-md text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 transition-colors duration-200">
+                        <i class="fas fa-coffee mr-2"></i>Buy me a coffee
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Progress Steps -->
+        <div class="mb-8">
+            <div class="flex items-center justify-center">
+                <div class="flex items-center text-blue-600">
+                    <div class="rounded-full h-8 w-8 flex items-center justify-center bg-blue-600 text-white">1</div>
+                    <div class="ml-2 font-medium">SOP</div>
+                </div>
+                <div class="h-1 w-16 bg-gray-200 mx-4"></div>
+                <div class="flex items-center text-gray-400">
+                    <div class="rounded-full h-8 w-8 flex items-center justify-center bg-gray-200">2</div>
+                    <div class="ml-2 font-medium">Interview</div>
+                </div>
+                <div class="h-1 w-16 bg-gray-200 mx-4"></div>
+                <div class="flex items-center text-gray-400">
+                    <div class="rounded-full h-8 w-8 flex items-center justify-center bg-gray-200">3</div>
+                    <div class="ml-2 font-medium">Feedback</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">Submit Your Statement of Purpose</h1>
+            <p class="text-gray-600 mb-6">
+                Your Statement of Purpose helps us generate personalized interview questions. Please paste your SOP below or upload a PDF file.
+            </p>
+
+            <form id="sopForm" class="space-y-6">
+                <!-- Text Input -->
+                <div>
+                    <label for="sopText" class="block text-sm font-medium text-gray-700 mb-2">
+                        Statement of Purpose
+                    </label>
+                    <textarea id="sopText" name="sopText" rows="10" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Paste your Statement of Purpose here..."></textarea>
+                </div>
+
+                <!-- File Upload -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Or Upload PDF File
+                    </label>
+                    <div id="dropZone" class="file-drop-zone rounded-lg p-8 text-center cursor-pointer">
+                        <input type="file" id="fileInput" accept=".pdf" class="hidden">
+                        <div class="space-y-2">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400"></i>
+                            <p class="text-gray-600">Drag and drop your PDF file here or click to browse</p>
+                            <p class="text-sm text-gray-500">Maximum file size: 5MB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirmation Checkbox -->
+                <div class="flex items-start">
+                    <div class="flex items-center h-5">
+                        <input id="guidelines" name="guidelines" type="checkbox" 
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                    </div>
+                    <div class="ml-3">
+                        <label for="guidelines" class="text-sm text-gray-600">
+                            I confirm that this is my original Statement of Purpose
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="window.location.href='index.html'"
+                        class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Continue to Interview
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 fixed bottom-0 w-full">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-sm text-gray-400">
+                    © 2023 F1 Interview Prep. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sopForm = document.getElementById('sopForm');
+            const sopTextarea = document.getElementById('sopText');
+            const fileInput = document.getElementById('fileInput');
+            const dropZone = document.getElementById('dropZone');
+
+            // File Upload Handling
+            dropZone.addEventListener('click', () => fileInput.click());
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                const file = e.dataTransfer.files[0];
+                handleFile(file);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                handleFile(file);
+            });
+
+            function handleFile(file) {
+                if (!file) return;
+                
+                if (file.type !== 'application/pdf') {
+                    alert('Please upload a PDF file');
+                    return;
+                }
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    try {
+                        // Here we would normally send the PDF to the server for processing
+                        // For now, we'll just show a success message
+                        alert('PDF uploaded successfully! Processing...');
+                        // In a real implementation, we would extract text from the PDF
+                        // and populate the textarea
+                    } catch (error) {
+                        console.error('Error processing PDF:', error);
+                        alert('Error processing PDF file');
+                    }
+                };
+                reader.readAsArrayBuffer(file);
+            }
+
+            // Form Submission
+            sopForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const sop = sopTextarea.value.trim();
+                const guidelines = document.getElementById('guidelines').checked;
+                
+                if (!sop) {
+                    alert('Please enter your Statement of Purpose');
+                    return;
+                }
+
+                if (!guidelines) {
+                    alert('Please confirm that this is your original Statement of Purpose');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/upload_sop', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ sop }),
+                    });
+
+                    if (response.ok) {
+                        // Store SOP in localStorage for the interview page
+                        localStorage.setItem('userSOP', sop);
+                        // Redirect to interview page on success
+                        window.location.href = 'interview.html';
+                    } else {
+                        const data = await response.json();
+                        alert(data.error || 'An error occurred while uploading your SOP');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    // If the server is not responding, store in localStorage and proceed
+                    localStorage.setItem('userSOP', sop);
+                    window.location.href = 'interview.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
