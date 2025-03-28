@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Categories - F1 Interview Prep</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+        }
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="flex items-center">
+                            <i class="fas fa-passport text-blue-600 text-2xl mr-2"></i>
+                            <span class="font-bold text-xl text-gray-800">F1 Interview Prep</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="about.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        About Us
+                    </a>
+                    <a href="https://www.buymeacoffee.com" target="_blank" class="px-4 py-2 rounded-md text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 transition-colors duration-200">
+                        <i class="fas fa-coffee mr-2"></i>Buy me a coffee
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Progress Steps -->
+        <div class="mb-8">
+            <div class="flex items-center justify-center">
+                <div class="flex items-center text-blue-600">
+                    <div class="rounded-full h-8 w-8 flex items-center justify-center bg-blue-600 text-white">1</div>
+                    <div class="ml-2 font-medium">Categories</div>
+                </div>
+                <div class="h-1 w-16 bg-gray-200 mx-4"></div>
+                <div class="flex items-center text-gray-400">
+                    <div class="rounded-full h-8 w-8 flex items-center justify-center bg-gray-200">2</div>
+                    <div class="ml-2 font-medium">Practice</div>
+                </div>
+                <div class="h-1 w-16 bg-gray-200 mx-4"></div>
+                <div class="flex items-center text-gray-400">
+                    <div class="rounded-full h-8 w-8 flex items-center justify-center bg-gray-200">3</div>
+                    <div class="ml-2 font-medium">Feedback</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="categoriesGrid">
+            <!-- Categories will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Add Question Modal -->
+    <div id="addQuestionModal" class="modal">
+        <div class="bg-white w-full max-w-md mx-auto mt-20 rounded-lg shadow-xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold">Add New Question</h3>
+                    <button class="modal-close text-gray-400 hover:text-gray-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="addQuestionForm">
+                    <input type="hidden" id="categoryId">
+                    <div class="mb-4">
+                        <label for="questionText" class="block text-sm font-medium text-gray-700 mb-2">
+                            Question
+                        </label>
+                        <textarea id="questionText" rows="4" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Enter your question here..."></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" class="modal-close px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                            Add Question
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Questions Modal -->
+    <div id="viewQuestionsModal" class="modal">
+        <div class="bg-white w-full max-w-4xl mx-auto mt-20 rounded-lg shadow-xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold" id="categoryTitle">Category Questions</h3>
+                    <button class="modal-close text-gray-400 hover:text-gray-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <button id="addQuestionBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
+                        <i class="fas fa-plus mr-2"></i>Add Question
+                    </button>
+                </div>
+                <div class="space-y-4" id="questionsList">
+                    <!-- Questions will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 fixed bottom-0 w-full">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-sm text-gray-400">
+                    © 2023 F1 Interview Prep. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            const addQuestionModal = document.getElementById('addQuestionModal');
+            const viewQuestionsModal = document.getElementById('viewQuestionsModal');
+            const addQuestionForm = document.getElementById('addQuestionForm');
+            const categoryIdInput = document.getElementById('categoryId');
+            const questionTextInput = document.getElementById('questionText');
+            const categoryTitle = document.getElementById('categoryTitle');
+            const questionsList = document.getElementById('questionsList');
+            const addQuestionBtn = document.getElementById('addQuestionBtn');
+            const modalCloseButtons = document.querySelectorAll('.modal-close');
+
+            // Modal functionality
+            function openModal(modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal(modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            modalCloseButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    closeModal(addQuestionModal);
+                    closeModal(viewQuestionsModal);
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    closeModal(e.target);
+                }
+            });
+
+            // Load categories
+            async function loadCategories() {
+                try {
+                    const response = await fetch('/api/categories');
+                    const data = await response.json();
+                    if (data.success) {
+                        categoriesGrid.innerHTML = data.categories.map(category => `
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
+                                <div class="flex items-center mb-4">
+                                    <i class="fas fa-list text-blue-600 text-xl mr-3"></i>
+                                    <h3 class="text-lg font-semibold">${category.name}</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">Practice questions related to ${category.name.toLowerCase()}.</p>
+                                <button class="view-questions px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 w-full" 
+                                        data-id="${category.id}" data-name="${category.name}">
+                                    View Questions
+                                </button>
+                            </div>
+                        `).join('');
+
+                        // Add event listeners to view buttons
+                        document.querySelectorAll('.view-questions').forEach(button => {
+                            button.addEventListener('click', () => {
+                                const categoryId = button.dataset.id;
+                                const categoryName = button.dataset.name;
+                                loadQuestions(categoryId, categoryName);
+                            });
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error loading categories:', error);
+                }
+            }
+
+            // Load questions for a category
+            async function loadQuestions(categoryId, categoryName) {
+                try {
+                    const response = await fetch(`/api/questions/${categoryId}`);
+                    const data = await response.json();
+                    if (data.success) {
+                        categoryTitle.textContent = `${categoryName} Questions`;
+                        questionsList.innerHTML = data.questions.map((question, index) => `
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="flex justify-between items-start">
+                                    <p class="text-gray-800">${question}</p>
+                                    <button class="delete-question text-red-600 hover:text-red-700 ml-4" 
+                                            data-category="${categoryId}" data-index="${index}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('');
+
+                        // Add event listeners to delete buttons
+                        document.querySelectorAll('.delete-question').forEach(button => {
+                            button.addEventListener('click', async () => {
+                                const categoryId = button.dataset.category;
+                                const questionIndex = button.dataset.index;
+                                await deleteQuestion(categoryId, questionIndex);
+                                loadQuestions(categoryId, categoryName);
+                            });
+                        });
+
+                        // Set up add question button
+                        categoryIdInput.value = categoryId;
+                        addQuestionBtn.onclick = () => {
+                            closeModal(viewQuestionsModal);
+                            openModal(addQuestionModal);
+                        };
+
+                        openModal(viewQuestionsModal);
+                    }
+                } catch (error) {
+                    console.error('Error loading questions:', error);
+                }
+            }
+
+            // Add new question
+            addQuestionForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const categoryId = categoryIdInput.value;
+                const question = questionTextInput.value.trim();
+
+                if (!question) {
+                    alert('Please enter a question');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/questions/${categoryId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ question }),
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        questionTextInput.value = '';
+                        closeModal(addQuestionModal);
+                        const categoryButton = document.querySelector(`.view-questions[data-id="${categoryId}"]`);
+                        loadQuestions(categoryId, categoryButton.dataset.name);
+                    }
+                } catch (error) {
+                    console.error('Error adding question:', error);
+                }
+            });
+
+            // Delete question
+            async function deleteQuestion(categoryId, questionIndex) {
+                try {
+                    const response = await fetch(`/api/questions/${categoryId}/${questionIndex}`, {
+                        method: 'DELETE',
+                    });
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error deleting question:', error);
+                }
+            }
+
+            // Initialize
+            loadCategories();
+        });
+    </script>
+</body>
+</html>
